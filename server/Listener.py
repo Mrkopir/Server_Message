@@ -24,6 +24,7 @@ class Listener(Server):
     def accept_clients(self):
         while True:
             __client, __address = self._server.accept()
+            self.clients.append(__client)
             print(f"Client is trying to connect from {__address}")
 
             client_thread = threading.Thread(target=self.handle_client, args=(__client, __address))
@@ -37,7 +38,8 @@ class Listener(Server):
                 if not self.__data:
                     break
                 print(f"Received from {__address}: {self.__data}")
-
+                self.broadcast(f"Message from {__address}: {self.__data}", __client)
             except ConnectionResetError:
                 break
+        self.clients.remove(__client)
         __client.close()
