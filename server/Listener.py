@@ -2,6 +2,7 @@ import threading
 
 from Server import Server
 
+
 class Listener(Server):
     __client = None
     __address = None
@@ -10,12 +11,12 @@ class Listener(Server):
         if not cls.__client:
             cls.__client = object.__new__(cls, *args, **kwargs)
         return cls.__client
-    
+
     def __new__(cls, *args, **kwargs):
         if not cls.__address:
             cls.__address = object.__new__(cls, *args, **kwargs)
         return cls.__address
-    
+
     def __init__(self):
         super().__init__()
 
